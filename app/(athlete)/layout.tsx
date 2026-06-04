@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Logo from "@/components/Logo";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function AthleteLayout({ children }: { children: React.ReactNode }) {
@@ -18,7 +19,7 @@ export default async function AthleteLayout({ children }: { children: React.Reac
   return (
     <div className="min-h-screen bg-black">
       <nav className="border-b border-gray-800 px-4 py-3 flex items-center justify-between">
-        <span className="font-bold text-white tracking-wide">BORN 2 WIN</span>
+        <Logo />
         <div className="flex gap-6 text-sm text-gray-400">
           <Link href="/home" className="hover:text-white">Home</Link>
           <Link href="/programs" className="hover:text-white">Programs</Link>

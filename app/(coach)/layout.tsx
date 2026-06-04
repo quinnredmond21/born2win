@@ -1,10 +1,11 @@
 import Link from "next/link";
+import Logo from "@/components/Logo";
 
 export default function CoachLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-black">
       <nav className="border-b border-gray-800 px-4 py-3 flex items-center justify-between">
-        <span className="font-bold text-white tracking-wide">BORN 2 WIN — COACH</span>
+        <Logo />
         <div className="flex gap-6 text-sm text-gray-400">
           <Link href="/coach/dashboard" className="hover:text-white">Dashboard</Link>
           <Link href="/coach/workouts" className="hover:text-white">Workouts</Link>

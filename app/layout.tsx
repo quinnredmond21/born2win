@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Dancing_Script } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+const dancingScript = Dancing_Script({ variable: "--font-dancing", subsets: ["latin"], weight: ["700"] });
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -26,7 +27,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-white`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${dancingScript.variable} antialiased bg-black text-white`}>
         {children}
       </body>
     </html>
