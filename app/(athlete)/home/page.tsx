@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
+import Logo from "@/components/Logo";
 import type { Program, Challenge, WorkoutLog } from "@/lib/types";
 
 export default async function HomePage() {
@@ -32,6 +33,10 @@ export default async function HomePage() {
 
   return (
     <div className="space-y-10">
+      <div className="flex flex-col items-center justify-center py-10 select-none pointer-events-none">
+        <Logo size="lg" />
+      </div>
+
       <div>
         <h1 className="text-3xl font-black text-white">
           {firstName}.
