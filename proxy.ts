@@ -4,7 +4,7 @@ import { NextResponse, type NextRequest } from "next/server";
 const PUBLIC_ROUTES = ["/", "/login", "/signup", "/api/webhooks/stripe"];
 const AUTH_ROUTES = ["/login", "/signup"];
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request });
 
   const supabase = createServerClient(
@@ -31,12 +31,10 @@ export async function middleware(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser();
   const path = request.nextUrl.pathname;
 
-  // Redirect logged-in users away from auth pages
   if (user && AUTH_ROUTES.some((r) => path.startsWith(r))) {
     return NextResponse.redirect(new URL("/home", request.url));
   }
 
-  // Protect athlete and coach routes
   const isProtected = !PUBLIC_ROUTES.some(
     (r) => path === r || path.startsWith(r + "/")
   );
@@ -44,7 +42,6 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // Protect coach routes
   if (path.startsWith("/coach") && user) {
     const { data: profile } = await supabase
       .from("profiles")
