@@ -26,19 +26,6 @@ export default function LoginPage() {
       return;
     }
 
-    const { data: { user } } = await supabase.auth.getUser();
-    if (user) {
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("is_coach")
-        .eq("id", user.id)
-        .single();
-      if (profile?.is_coach) {
-        router.push("/coach/dashboard");
-        return;
-      }
-    }
-
     router.push("/home");
   }
 
