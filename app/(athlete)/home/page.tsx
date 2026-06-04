@@ -1,6 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import type { Program, Challenge, WorkoutLog } from "@/lib/types";
 
 export default async function HomePage() {
@@ -8,7 +7,7 @@ export default async function HomePage() {
   const { data: { user } } = await supabase.auth.getUser();
 
   const [profileResult, programsResult, challengeResult, logsResult] = await Promise.all([
-    supabase.from("profiles").select("name, tier, is_coach").eq("id", user!.id).single(),
+    supabase.from("profiles").select("name, tier").eq("id", user!.id).single(),
     supabase.from("programs").select("id, name, description, tier").order("created_at", { ascending: false }).limit(3),
     supabase
       .from("challenges")
@@ -25,7 +24,6 @@ export default async function HomePage() {
 
   const profile = profileResult.data;
 
-  if (profile?.is_coach) redirect("/coach/dashboard");
   const programs = (programsResult.data ?? []) as Program[];
   const activeChallenge = challengeResult.data as Challenge | null;
   const recentLogs = (logsResult.data ?? []) as WorkoutLog[];

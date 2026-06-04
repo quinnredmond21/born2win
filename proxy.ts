@@ -42,14 +42,20 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  if (path.startsWith("/coach") && user) {
+  if (user && (path.startsWith("/coach") || path === "/home")) {
     const { data: profile } = await supabase
       .from("profiles")
       .select("is_coach")
       .eq("id", user.id)
       .single();
 
-    if (!profile?.is_coach) {
+    const isCoach = profile?.is_coach === true;
+
+    if (path === "/home" && isCoach) {
+      return NextResponse.redirect(new URL("/coach/dashboard", request.url));
+    }
+
+    if (path.startsWith("/coach") && !isCoach) {
       return NextResponse.redirect(new URL("/home", request.url));
     }
   }
